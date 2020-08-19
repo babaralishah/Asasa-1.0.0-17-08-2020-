@@ -1,3 +1,4 @@
+// import { AlertModule } from 'ngx-bootstrap';
 import {MatToolbarModule} from '@angular/material/toolbar';
 // import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,13 +12,20 @@ import { MapComponent } from './map/map.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ForgetpassComponent } from './forgetpass/forgetpass.component';
+import { ForgetpassverifyComponent } from './forgetpassverify/forgetpassverify.component';
+import { NewpassComponent } from './newpass/newpass.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgetpassComponent,
+    ForgetpassverifyComponent,
+    NewpassComponent
   ],
   imports: [
     HttpClientModule, 
@@ -26,6 +34,7 @@ import { RegisterComponent } from './register/register.component';
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule
     // MaterialModule
   ],
   providers: [],
