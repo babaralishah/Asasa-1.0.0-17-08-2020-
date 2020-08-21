@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 import { User } from './login/User';
 @Injectable({
@@ -7,16 +8,17 @@ import { User } from './login/User';
 })
 export class UserService {
 
+  private readonly url = environment.url;
   constructor(private http: HttpClient) { }
-  getAll() {
-    return this.http.get<User[]>(`${config.apiUrl}/users`);
+  public getAll() {
+    return this.http.get<User[]>(`${this.url}/users`);
 }
 
-register(user: User) {
-    return this.http.post(`${config.apiUrl}/users/register`, user);
-}
+// register(user: User) {
+//     return this.http.post(`${config.apiUrl}/users/register`, user);
+// }
 
-delete(id: number) {
-    return this.http.delete(`${config.apiUrl}/users/${id}`);
-}
+// delete(id: number) {
+//     return this.http.delete(`${config.apiUrl}/users/${id}`);
+// }
 }

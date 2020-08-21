@@ -4,15 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
-  selector: 'app-forgetpassverify',
-  templateUrl: './forgetpassverify.component.html',
-  styleUrls: ['./forgetpassverify.component.css']
+  selector: 'app-signupotp',
+  templateUrl: './signupotp.component.html',
+  styleUrls: ['./signupotp.component.css']
 })
-export class ForgetpassverifyComponent implements OnInit {
+export class SignupotpComponent implements OnInit {
 
   submitted = false;
   email: string;
-  forgetpassForm: FormGroup;
+  signupotpForm: FormGroup;
   constructor(
     private authServ: AuthenticationService,
     private formBuilder: FormBuilder,
@@ -27,38 +27,35 @@ export class ForgetpassverifyComponent implements OnInit {
     this.initialize();
   }
   initialize() {
-    this.forgetpassForm = this.formBuilder.group({
+    this.signupotpForm = this.formBuilder.group({
       code: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern('^[0-9]+$')]]
     });
   }
-  get f() { return this.forgetpassForm.controls; }
+  get f() { return this.signupotpForm.controls; }
 
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
-    if (this.forgetpassForm.invalid) {
+    if (this.signupotpForm.invalid) {
       return;
     }
     const user = {
       email: this.email,
-      otpcode: this.forgetpassForm.value.code
+      otpcode: this.signupotpForm.value.code
     };
 
-    // this.authServ.verifyOTPEmail(user).subscribe(data => {
-    //   console.log(data);
-    // });
-    this.authServ.verifyOTPCode(user).subscribe(data => {
+    this.authServ.verifyOTPEmail(user).subscribe(data => {
       console.log(data);
       const status = data.status;
       const msg = data.msg;
       if (status) {
 
         alert('\nMessage: ' + msg + '\n\n Status: ' + status)
-        this.router.navigate(['newpass-component',this.email]);
+        this.router.navigate(['']);
       } else {
         alert(msg);
       }
     });
-  }
 
+  }
 }

@@ -5,7 +5,8 @@ h2{
   margin-top: -10px;
 }
 
-input{
+input{    
+  margin-left: 15px;
   border: 2px solid #0000001a !important;
   border-radius: 50rem!important;
 }
@@ -27,6 +28,7 @@ i:before {
 margin-left: 12px;
 }
 .input-field { 
+  margin-left: 15px;
 	width: 100%; 
 	padding: 10px; 
 	text-align: center; 
@@ -59,9 +61,9 @@ margin-left: 12px;
 }
 
 .btn{
-  padding: 0px;
-  height: 30px;
-  width: 50px;
+  /* padding: 0px; */
+  /* height: 30px; */
+  width: 100px;
   font-size: 14px;
   background-color: #38baa2 ;
   color: white;

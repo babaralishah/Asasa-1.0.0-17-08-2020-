@@ -61,16 +61,19 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value).subscribe((data) => {
       console.log(data);
-      this.registerresponse = data;
-      console.log('Status: ' + this.registerresponse.status);
-      if (this.registerresponse.status === true) {
-        const email = this.registerForm.value.email;
+      // this.registerresponse = data;
+      const email = this.registerForm.value.email;
+      const msg = data.msg;
+      const status = data.status;
+      // console.log('Status: ' + status);
+      if (status) {
         this.registerForm.reset();
-       
-        this.router.navigate(['forgetpassverify-component',email ]);
+
+        alert(msg);
+        this.router.navigate(['signupotp-component', email]);
       }
       else {
-        alert('SUCCESS!! :-)\n\n' + (this.registerresponse.msg));
+        alert(msg);
       }
     })
   }

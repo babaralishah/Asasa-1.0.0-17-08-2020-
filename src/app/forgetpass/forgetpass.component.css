@@ -6,6 +6,7 @@ h2{
 }
 
 input{
+  margin-left: 15px;
   border: 2px solid #0000001a !important;
   border-radius: 50rem!important;
 }

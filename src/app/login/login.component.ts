@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-  get email() {
-    return this.loginForm.get('email')
-  }
+  // get email() {
+  //   return this.loginForm.get('email')
+  // }
   loginUser() {
     this.submitted = true;
     if (this.loginForm.invalid) {

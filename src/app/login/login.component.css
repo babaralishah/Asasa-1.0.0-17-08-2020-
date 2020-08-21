@@ -6,6 +6,7 @@ h2{
 }
 
 input{
+  margin-left: 15px;
   border: 2px solid #0000001a !important;
   border-radius: 50rem!important;
 }
@@ -27,6 +28,7 @@ i:before {
 margin-left: 12px;
 }
 .input-field { 
+  margin-left: 20px;
 	width: 100%; 
 	padding: 10px; 
 	text-align: center; 
@@ -51,7 +53,7 @@ margin-left: 12px;
 .v2{
   margin-top: 40px ;
   color: #38baa2;
-  font-weight: bold;
+  font-weight: 900;
 }
 .login{
 	height:auto;
