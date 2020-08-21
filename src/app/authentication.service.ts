@@ -5,36 +5,67 @@ import { User } from './login/User';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  API_URL: string = 'http://localhost:4000';
+  // API_URL: string = 'http://localhost:4000';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
+  private readonly url = environment.url;
+
+
+
   currentUser = {};
 
-  constructor(private httpClient: HttpClient,public router: Router) { 
+  constructor(private httpClient: HttpClient, public router: Router) {
     // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     // this.currentUser = this.currentUserSubject.asObservable();
   }
+  public getAll(): Observable<any> {
+    return this.httpClient.get<User[]>(`${this.url}/user`);
+  }
+  // Function to Register the new user
   register(user: User): Observable<any> {
 
-    return this.httpClient.post(`${this.API_URL}/users/register`, user).pipe(
-        catchError(this.handleError)
+    return this.httpClient.post(`${this.url}/user/signup`, user).pipe(
+      catchError(this.handleError)
     )
   }
+  /////////////////////////////////////
+  /* API Call to verify otp code */
+  verifyOTPEmail(user: any): Observable<any> {
 
-  login(user: User) {
-    console.log('Hello',user.password);
-    return this.httpClient.post<any>(`${this.API_URL}/users/login`, user)
-      .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.token)
-        this.getUserProfile(res._id).subscribe((res) => {
-          this.currentUser = res;
-          this.router.navigate(['users/profile/' + res.msg._id]);
-        })
-      })
-  }getAccessToken() {
+    return this.httpClient.post(`${this.url}/user/verifyemail`, user).pipe(
+      catchError(this.handleError)
+    )
+  }
+  verifyOTPCode(user: any): Observable<any> {
+
+    return this.httpClient.post(`${this.url}/user/password/verifyotpcode`, user).pipe(
+      catchError(this.handleError)
+    )
+  }
+  // Function to Login the already existed user
+  login(user: User): Observable<any> {
+    // console.log('Hello', user.email);
+    return this.httpClient.post(`${this.url}/user/login`, user);
+      // .subscribe((data: any) => {
+      //   localStorage.setItem('access_token', data.token)
+      //   this.getUserProfile(data._id).subscribe((data) => {
+      //     this.currentUser = data;
+      //     this.router.navigate(['users/profile/' + data.msg._id]);
+      //   })
+      // })
+  } 
+  
+  verifyEmail (body:any): Observable<any>{
+    return this.httpClient.post(`${this.url}/user/password/verifyemail`, body);
+
+  }
+  
+  
+  getAccessToken() {
     return localStorage.getItem('access_token');
   }
 
@@ -42,22 +73,26 @@ export class AuthenticationService {
     let authToken = localStorage.getItem('access_token');
     return (authToken !== null) ? true : false;
   }
-
+  ////////// Logout Function ////////////////
   logout() {
     if (localStorage.removeItem('access_token') == null) {
       this.router.navigate(['users/login']);
     }
   }
+  ///////////////////////////////////////////
 
+  ///////// Get Profile Function ////////////
   getUserProfile(id): Observable<any> {
-    return this.httpClient.get(`${this.API_URL}/users/profile/${id}`, { headers: this.headers }).pipe(
+    return this.httpClient.get(`${this.url}/user/profile/${id}`, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {}
       }),
       catchError(this.handleError)
     )
   }
+  ///////////////////////////////////////////
 
+  ///////// Error Handling /////////////////
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

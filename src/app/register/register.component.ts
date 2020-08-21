@@ -1,3 +1,5 @@
+
+import { RegisterResponse } from './RegisterResponse';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "../authentication.service";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,37 +13,39 @@ import { first } from 'rxjs/operators';
 export class RegisterComponent implements OnInit {
   submitted = false;
   registerForm: FormGroup;
+
   constructor(
     public formBuilder: FormBuilder,
     public authService: AuthenticationService,
     public router: Router) {
-    this.registerForm = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      password: ['']
-    })
   }
 
+  registerresponse: RegisterResponse;
   ngOnInit(): void {
+    this.initialize();
+  }
+
+  initialize() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+  // check() {
+  //   if (document.getElementById('password') ==
+  //     document.getElementById('confirm')) {
+  //     document.getElementById('message').style.color = 'green';
+  //     document.getElementById('message').innerHTML = 'matching';
+  //     console.log('check function 01');
+  //   } else {
+  //     document.getElementById('message').style.color = 'red';
+  //     document.getElementById('message').innerHTML = 'password not matching';
+  //     console.log('check function 02');
+  //   }
+  // }
   registerUser() {
-    this.authService.register(this.registerForm.value).subscribe((res) => {
-      if (res.result) {
-        this.registerForm.reset()
-        this.router.navigate(['login']);
-      }
-    })
-  }
-  // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
-
-  onSubmit() {
+    // this.check();
     this.submitted = true;
 
     // stop here if form is invalid
@@ -49,6 +53,38 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
+    alert('SUCCESS!! :-)\n' + JSON.stringify(this.registerForm.value))
+
+    // this.authService.getAll().subscribe((data) => {
+    //   console.log(data);
+    // })
+    console.log(this.registerForm.value);
+    this.authService.register(this.registerForm.value).subscribe((data) => {
+      console.log(data);
+      this.registerresponse = data;
+      console.log('Status: ' + this.registerresponse.status);
+      if (this.registerresponse.status === true) {
+        const email = this.registerForm.value.email;
+        this.registerForm.reset();
+       
+        this.router.navigate(['forgetpassverify-component',email ]);
+      }
+      else {
+        alert('SUCCESS!! :-)\n\n' + (this.registerresponse.msg));
+      }
+    })
   }
+  // convenience getter for easy access to form fields
+  get f() { return this.registerForm.controls; }
+
+  // onSubmit() {
+  //   this.submitted = true;
+
+  //   // stop here if form is invalid
+  //   if (this.registerForm.invalid) {
+  //     return;
+  //   }
+
+  //   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
+  // }
 }

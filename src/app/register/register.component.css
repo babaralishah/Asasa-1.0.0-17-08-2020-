@@ -1,33 +1,18 @@
-.wrapper {
-  /* position: relative; */
-  /* width: 1px; */
-  /* height: 600px; */
-  margin: 1px;
-}
-.line {
-    position: absolute;
-    left: 49%;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: #38baa2;
-    z-index: 1;
+h2{
+  color: #38baa2;
+  font-weight: 600;
+  margin-left: 200px;
+  margin-top: -10px;
 }
 
-.wordwrapper {
-  text-align: center;
-  height: 5px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 40%;
-  margin-top: 12px;
-  z-index: 2;
+input{
+  border: 2px solid #0000001a !important;
+  border-radius: 50rem!important;
 }
 i:before {
   position: relative;
-  top: 25%;
-  font-size: 26px;
+  top: 30%;
+  font-size: 22px;
   color: #38bba3;
   margin-right: 1px;
 }
@@ -36,7 +21,10 @@ i:before {
     letter-spacing: 1px;
     padding: 20 px;
     font: bold 14px arial,sans-serif;
-    /* background: #fff; */
+    /* background:. #fff; */
+}
+.emailInput{
+margin-left: 10px;
 }
 .input-field { 
 	width: 100%; 
@@ -55,19 +43,21 @@ i:before {
 .a{
 	text-align: left;
 }
-.vl {
-	border-right: 3px solid  #38baa2 ;
-	height: 650px;
-  }
-  .v2 {
-	  border-right: 3px solid  #38baa2 ;
-	  height: 300px;
-	}
+.vl{
+  border-left: 2.2px solid #38baa2;
+  height: 250px;
+  margin-left: 22px;
+}
+.v2{
+  margin-top: 40px ;
+  color: #38baa2;
+  font-weight: bold;
+}
 .login{
 	height:auto;
   min-height: 100vh;
 }
-
+/* 
 .bg-image {    
   height: 650px; 
   width: 500px; 
@@ -79,9 +69,31 @@ i:before {
   /* position: fixed; */
     /* width: 100%;
 	height: 100%; */
-  background-size: cover;
+  /* background-size: cover;
   background-position: center center;
-}
+} */
+
 .btn{
-	background-color: #38baa2 ;
+  width: 100px;
+  font-size: 14px;
+  background-color: #38baa2 ;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.left-img{
+  width:61%}
+
+.inputs{
+  margin-left: 15px;
+}
+.left{
+margin-top: 145px ;
+}
+.right{
+margin-top: 160px ;
+}
+.input-area1{
+  
+  margin-left: 20px;
 }

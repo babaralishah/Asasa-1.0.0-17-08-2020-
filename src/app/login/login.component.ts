@@ -1,4 +1,6 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿
+// import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "../authentication.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -10,15 +12,7 @@ import { first } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  // // Regex Implementation here
-  // loginForm = new FormGroup({
-  //   email: new FormControl('',[
-  //     Validators.required,
-  //     Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])
-  //   });  
-  //   //////////////////////
-
-  loginForm: FormGroup; // Instance of Form grouo that will get form data from user end (i.e; login.html)
+  loginForm: FormGroup; // Instance of Form group that will get form data from user end (i.e; login.html)
   // registerForm: FormGroup;
   loading = false;
   submitted = false;
@@ -26,34 +20,39 @@ export class LoginComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder, // Creating an instance of Formbuilder
     public authService: AuthenticationService, // Instance of Authentication services created in front end
-    public router: Router) {  
-    //   this.loginForm= this.formBuilder.group({ // Instializes the Loginform
-    //   email: [''],
-    //   password: ['']
-    // })
+    public router: Router) {
   }
 
-  ngOnInit(): void { this.loginForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
-});
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
-  get email(){
+  get email() {
     return this.loginForm.get('email')
-    }
+  }
   loginUser() {
-    this.authService.login(this.loginForm.value)
-  }
-  get f() { return this.loginForm.controls; }
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    // console.log('user login data: ',this.loginForm.value);
+    this.authService.login(this.loginForm.value).subscribe(data => {
 
-  onSubmit() {
-      this.submitted = true;
+      console.log(data);
+      const status = data.status;
+      const msg: string = data.msg;
+      console.log("Status: " + status);
+      // console.log("Message: " + msg);
+      if (status) {
 
-      // stop here if form is invalid
-      if (this.loginForm.invalid) {
-          return;
+        alert('SUCCESS!! :-)')
+      } else {
+        alert('Invalid email or password!');
       }
-
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
+    });
   }
+  // getting input labels values from user end (login.html)
+  get f() { return this.loginForm.controls; }
 }

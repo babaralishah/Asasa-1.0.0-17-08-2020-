@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'login-component', component: LoginComponent },
   { path: 'register-component', component: RegisterComponent },
   { path: 'forgetpass-component', component: ForgetpassComponent },
-  { path: 'forgetpassverify-component', component: ForgetpassverifyComponent },
+  { path: 'forgetpassverify-component/:email', component: ForgetpassverifyComponent },
   { path: 'newpass-component', component: NewpassComponent }
 ];
 
